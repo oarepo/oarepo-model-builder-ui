@@ -1,23 +1,12 @@
 import json
-from typing import Callable, List
-
-import faker
-import faker.providers
-from jinja2 import Environment, FunctionLoader
-
-from oarepo_model_builder.builders import OutputBuilder
-from oarepo_model_builder.builders.utils import ensure_directory
-from oarepo_model_builder.templates import templates
-
-from ..builder import ModelBuilder
-from ..builders import process
-from ..builders.json_base import JSONBaseBuilder
-from ..entrypoints import load_entry_points_list
-from ..property_preprocessors import PropertyPreprocessor
-from deepmerge import always_merger
+from typing import  List
 
 
-SKIP = "skip"
+from oarepo_model_builder.builder import ModelBuilder
+from oarepo_model_builder.builders import process
+from oarepo_model_builder.builders.json_base import JSONBaseBuilder
+from oarepo_model_builder.property_preprocessors import PropertyPreprocessor
+
 
 
 class InvenioLayoutBuilder(JSONBaseBuilder):
@@ -28,7 +17,6 @@ class InvenioLayoutBuilder(JSONBaseBuilder):
 
     def __init__(self, builder: ModelBuilder, property_preprocessors: List[PropertyPreprocessor]):
         super().__init__(builder, property_preprocessors)
-        self.generator = SampleDataGenerator()
         self.ui = {}
         self.ui = self.builder.schema.schema['oarepo:ui'] #top oarepo:ui
 
@@ -150,8 +138,6 @@ class InvenioLayoutBuilder(JSONBaseBuilder):
         super().build(schema)
 
 
-    def skip(self, stack):
-        return get_oarepo_ui(stack).get("skip", False)
 
     def on_enter_model(self, output_name):
         self.output.next_document()

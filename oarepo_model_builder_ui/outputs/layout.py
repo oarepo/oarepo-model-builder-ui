@@ -2,9 +2,9 @@ import json
 
 from deepdiff import DeepDiff
 
-from ..utils.verbose import log
-from . import OutputBase
-from .json_stack import JSONStack
+from oarepo_model_builder.utils.verbose import log
+from oarepo_model_builder.outputs import OutputBase
+from oarepo_model_builder.outputs.json_stack import JSONStack
 
 try:
     import json5
