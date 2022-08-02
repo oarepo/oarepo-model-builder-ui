@@ -63,7 +63,7 @@ def test_mapping():
                 'type': 'fulltext+keyword',
                 'minLength':  5,
                 'oarepo:ui':{
-                  'detail': {
+                  'default': {
                       "component": "raw",
                       "dataField": ""
 

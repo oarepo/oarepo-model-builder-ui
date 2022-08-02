@@ -68,12 +68,7 @@ class InvenioLayoutBuilder(JSONBaseBuilder):
             if 'oarepo:ui' in self.stack.top.data and self.stack.path not in self.collected:
                 self.collected.append(self.stack.path)
                 self.stack.top.data['oarepo:ui'] = self.update_datafield(self.stack.top.data['oarepo:ui'], key, self.stack.top.data.properties)
-
-                for element in self.ui:
-                    if element in self.stack.top.data['oarepo:ui']:
-                        content = self.stack.top.data['oarepo:ui'][element]
-                        self.ui[element] =self.merge_content(self.ui[element], key, content)
-
+                self.process_elements(key)
                 self.output.merge(self.ui)
             self.output.enter(key, {})
             self.build_children()
@@ -95,13 +90,17 @@ class InvenioLayoutBuilder(JSONBaseBuilder):
             if 'oarepo:ui' in self.stack.top.data and self.stack.path not in self.collected:
                 self.collected.append(self.stack.path)
                 self.stack.top.data['oarepo:ui'] = self.update_datafield(self.stack.top.data['oarepo:ui'], key)
-                for element in self.ui:
-                    if element in self.stack.top.data['oarepo:ui']:
-                        content = self.stack.top.data['oarepo:ui'][element]
-                        self.ui[element] = self.merge_content(self.ui[element], key, content)
-
+                self.process_elements(key)
                 self.output.merge(self.ui)
 
+    def process_elements(self, key ):
+        for element in self.ui:
+            if element in self.stack.top.data['oarepo:ui']:
+                content = self.stack.top.data['oarepo:ui'][element]
+                self.ui[element] = self.merge_content(self.ui[element], key, content)
+            elif 'default' in self.stack.top.data['oarepo:ui']:
+                content = self.stack.top.data['oarepo:ui']['default']
+                self.ui[element] = self.merge_content(self.ui[element], key, content)
 
     def update_datafield(self, dictionary, path, properties = None):
         for layout in dictionary:

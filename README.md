@@ -1,2 +1,2 @@
-# OARepo Model Builder Multilingual
+# OARepo Model Builder UI
 
