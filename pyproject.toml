@@ -26,6 +26,9 @@ pytest = "^7"
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
 
+[tool.poetry.plugins."oarepo_model_builder.builders"]
+1050-layout-data = "oarepo_model_builder_ui.invenio.invenio_layout_data:InvenioLayoutBuilder"
+
 
 [tool.poetry.plugins."oarepo_model_builder.model_preprocessors"]
 30-layout = "oarepo_model_builder_ui.model_preprocessors.layout_settings:LayoutSettingsPreprocessor"

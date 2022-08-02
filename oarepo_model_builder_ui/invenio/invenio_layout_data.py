@@ -1,5 +1,5 @@
 import json
-from typing import  List
+from typing import List
 
 
 from oarepo_model_builder.builder import ModelBuilder
@@ -63,44 +63,44 @@ class InvenioLayoutBuilder(JSONBaseBuilder):
         full_key = full_key + key
         return full_key
     def generate_property(self, key):
-        if not self.skip(self.stack):
-            if "properties" in self.stack.top.data:
-                if 'oarepo:ui' in self.stack.top.data and self.stack.path not in self.collected:
-                    self.collected.append(self.stack.path)
-                    self.stack.top.data['oarepo:ui'] = self.update_datafield(self.stack.top.data['oarepo:ui'], key, self.stack.top.data.properties)
+        # if not self.skip(self.stack):
+        if "properties" in self.stack.top.data:
+            if 'oarepo:ui' in self.stack.top.data and self.stack.path not in self.collected:
+                self.collected.append(self.stack.path)
+                self.stack.top.data['oarepo:ui'] = self.update_datafield(self.stack.top.data['oarepo:ui'], key, self.stack.top.data.properties)
 
-                    for element in self.ui:
-                        if element in self.stack.top.data['oarepo:ui']:
-                            content = self.stack.top.data['oarepo:ui'][element]
-                            self.ui[element] =self.merge_content(self.ui[element], key, content)
-                            print(self.ui)
-                    self.output.merge(self.ui)
-                self.output.enter(key, {})
-                self.build_children()
-                self.output.leave()
-            elif "items" in self.stack.top.data:
-                self.output.enter(key, [])
-                self.build_children()
-                top = self.output.stack.real_top
+                for element in self.ui:
+                    if element in self.stack.top.data['oarepo:ui']:
+                        content = self.stack.top.data['oarepo:ui'][element]
+                        self.ui[element] =self.merge_content(self.ui[element], key, content)
+
+                self.output.merge(self.ui)
+            self.output.enter(key, {})
+            self.build_children()
+            self.output.leave()
+        elif "items" in self.stack.top.data:
+            self.output.enter(key, [])
+            self.build_children()
+            top = self.output.stack.real_top
 
                 # make items unique, just for sure
-                top_as_dict = {}
-                for t in top:
-                    top_as_dict[json.dumps(t, sort_keys=True)] = t
-                top.clear()
-                top.extend(top_as_dict.values())
+            top_as_dict = {}
+            for t in top:
+                top_as_dict[json.dumps(t, sort_keys=True)] = t
+            top.clear()
+            top.extend(top_as_dict.values())
 
-                self.output.leave()
-            else:
-                if 'oarepo:ui' in self.stack.top.data and self.stack.path not in self.collected:
-                    self.collected.append(self.stack.path)
-                    self.stack.top.data['oarepo:ui'] = self.update_datafield(self.stack.top.data['oarepo:ui'], key)
-                    for element in self.ui:
-                        if element in self.stack.top.data['oarepo:ui']:
-                            content = self.stack.top.data['oarepo:ui'][element]
-                            self.ui[element] =self.merge_content(self.ui[element], key, content)
-                            print(self.ui)
-                    self.output.merge(self.ui)
+            self.output.leave()
+        else:
+            if 'oarepo:ui' in self.stack.top.data and self.stack.path not in self.collected:
+                self.collected.append(self.stack.path)
+                self.stack.top.data['oarepo:ui'] = self.update_datafield(self.stack.top.data['oarepo:ui'], key)
+                for element in self.ui:
+                    if element in self.stack.top.data['oarepo:ui']:
+                        content = self.stack.top.data['oarepo:ui'][element]
+                        self.ui[element] = self.merge_content(self.ui[element], key, content)
+
+                self.output.merge(self.ui)
 
 
     def update_datafield(self, dictionary, path, properties = None):
