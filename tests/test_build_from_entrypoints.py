@@ -170,63 +170,64 @@ def test_mapping():
     builder.build(schema, "")
     # data = builder.filesystem.open(os.path.join("test", "records", "mappings", "v7", "test", "test-1.0.0.json")).read()
     data = builder.filesystem.open(os.path.join("ui", "layout.yaml")).read()
-    data = json.load(data)
-    assert data == """
-    "detail": {
-        "component": "column",
-        "items": [
-            {
-                "component": "icon",
-                "name": "thumbs up",
-                "color": "green",
-                "size": "large"
-            },
-            {
-                "component": "row",
-                "separator": "_",
-                "items": [
-                    {
-                        "component": "raw",
-                        "dataField": "author.first_name"
-                    },
-                    {
-                        "component": "raw",
-                        "dataField": "author.last_name"
-                    }
-                ]
-            },
-            {
-                "component": "raw",
-                "dataField": "title"
-            }
-        ]
-    },
-    "search": {
-        "component": "row",
-        "items": [
-            {
-                "component": "icon",
-                "name": "thumbs up",
-                "color": "green",
-                "size": "large"
-            },
-            {
-                "component": "column",
-                "items": [
-                    {
-                        "component": "raw",
-                        "dataField": "author.last_name"
-                    }
-                ]
-            },
-            {
-                "component": "truncated-text",
-                "dataField": "title",
-                "lines": 3
-            }
-        ]
+    data = json.loads(data)
+    expected = {
+        "detail": {
+            "component": "column",
+            "items": [
+                {
+                    "component": "icon",
+                    "name": "thumbs up",
+                    "color": "green",
+                    "size": "large"
+                },
+                {
+                    "component": "row",
+                    "separator": "_",
+                    "items": [
+                        {
+                            "component": "raw",
+                            "dataField": "author.first_name"
+                        },
+                        {
+                            "component": "raw",
+                            "dataField": "author.last_name"
+                        }
+                    ]
+                },
+                {
+                    "component": "raw",
+                    "dataField": "title"
+                }
+            ]
+        },
+        "search": {
+            "component": "row",
+            "items": [
+                {
+                    "component": "icon",
+                    "name": "thumbs up",
+                    "color": "green",
+                    "size": "large"
+                },
+                {
+                    "component": "column",
+                    "items": [
+                        {
+                            "component": "raw",
+                            "dataField": "author.last_name"
+                        }
+                    ]
+                },
+                {
+                    "component": "truncated-text",
+                    "dataField": "title",
+                    "lines": 3
+                }
+            ]
+        }
     }
-}
-    """
+
+    assert data == expected
 
 
