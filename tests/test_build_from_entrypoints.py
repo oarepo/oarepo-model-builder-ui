@@ -73,6 +73,10 @@ def test_mapping():
                     }
                 }
               },
+            'bezui2':{
+                'type': 'fulltext+keyword',
+                'minLength': 5
+            },
               'last_name':
                       {
                 'type': 'fulltext',
@@ -101,10 +105,16 @@ def test_mapping():
               'search': {
                 'component': 'column',
                 'items': [
-                 'last_name'
+                 'last_name',
+                'first_name',
+                    'bezui2'
                 ]
               }
             }
+          },
+          'bezui': {
+            'type': 'fulltext',
+            'minLength': 5
           },
           'title': {
             'type': 'fulltext',
@@ -153,7 +163,8 @@ def test_mapping():
     "size": "large"
               },
         'author',
-        'title'
+        'title',
+        'bezui'
       ]
     }
 
@@ -216,14 +227,21 @@ def test_mapping():
                         {
                             "component": "raw",
                             "dataField": "author.last_name"
-                        }
+                        },
+                        {'component': 'raw',
+                         'dataField': 'author.first_name'},
+                        {'component': 'raw',
+                         'dataField': 'author.bezui2'}
                     ]
                 },
                 {
                     "component": "truncated-text",
                     "dataField": "title",
                     "lines": 3
-                }
+                },
+                {'component': 'raw',
+                 'dataField': 'bezui'
+                 }
             ]
         }
     }

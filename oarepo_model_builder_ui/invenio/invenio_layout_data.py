@@ -65,6 +65,8 @@ class InvenioLayoutBuilder(JSONBaseBuilder):
     def generate_property(self, key):
         # if not self.skip(self.stack):
         if "properties" in self.stack.top.data:
+            if not 'oarepo:ui' in self.stack.top.data:
+                self.stack.top.data['oarepo:ui'] = {'default':{"component": "raw","dataField": ""}}
             if 'oarepo:ui' in self.stack.top.data and self.stack.path not in self.collected:
                 self.collected.append(self.stack.path)
                 self.stack.top.data['oarepo:ui'] = self.update_datafield(self.stack.top.data['oarepo:ui'], key, self.stack.top.data.properties)
@@ -87,6 +89,8 @@ class InvenioLayoutBuilder(JSONBaseBuilder):
 
             self.output.leave()
         else:
+            if not 'oarepo:ui' in self.stack.top.data:
+                self.stack.top.data['oarepo:ui'] = {'default': {"component": "raw","dataField": ""}}
             if 'oarepo:ui' in self.stack.top.data and self.stack.path not in self.collected:
                 self.collected.append(self.stack.path)
                 self.stack.top.data['oarepo:ui'] = self.update_datafield(self.stack.top.data['oarepo:ui'], key)
@@ -95,6 +99,8 @@ class InvenioLayoutBuilder(JSONBaseBuilder):
 
     def process_elements(self, key ):
         for element in self.ui:
+            # if not 'oarepo:ui' in self.stack.top.data:
+            #     self.stack.top.data['oarepo:ui'] = {"component": "raw","dataField": ""}
             if element in self.stack.top.data['oarepo:ui']:
                 content = self.stack.top.data['oarepo:ui'][element]
                 self.ui[element] = self.merge_content(self.ui[element], key, content)
@@ -116,8 +122,8 @@ class InvenioLayoutBuilder(JSONBaseBuilder):
 
     def merge_content(self, dictionary, path, content):
         content = json.dumps(content)
-        d = json.dumps(dictionary).replace(path, str(json.loads(content)))
-
+        import re
+        d = re.sub(r'\b'+re.escape(path)+r'\b',str(json.loads(content)), json.dumps(dictionary) )
         d = d.replace('"{', '{')
         d = d.replace('}"', '}')
         d = d.replace('"[', '[')
