@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "oarepo-model-builder-ui"
-version = "1.0.0"
+version = "1.0.1"
 description = ""
 authors = ["Alzbeta Pokorna <alzbeta.pokorna@cesnet.cz>"]
 readme = "README.md"
