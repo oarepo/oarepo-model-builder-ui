@@ -11,6 +11,7 @@ from typing import Dict
 from oarepo_model_builder.fs import AbstractFileSystem
 import yaml
 
+
 class MockFilesystem(AbstractFileSystem):
     def __init__(self):
         self.files: Dict[str, StringIO] = {}
@@ -42,135 +43,301 @@ class MockFilesystem(AbstractFileSystem):
             ret[fname] = io.getvalue()
         return ret
 
-def test_mapping():
+def test_missing_ui():
     schema = load_model(
         "test.yaml",
         "test",
         model_content={
-  "oarepo:use": "invenio",
-  'settings': {
-    'package': 'record_test',
-  },
-  'model': {
-    'properties': {
-      'metadata': {
-        'properties': {
-          'author': {
-            'type': 'object',
-            'properties': {
-              'first_name':
-              {
-                'type': 'fulltext+keyword',
-                'minLength':  5,
-                'oarepo:ui':{
-                  'default': {
-                      "component": "raw",
-                      "dataField": ""
+            "oarepo:use": "invenio",
+            'settings': {
+                'package': 'record_test',
+            },
+            'model': {
+                'properties': {
+                    'metadata': {
+                        'properties': {
+                            'author': {
+                                'type': 'object',
+                                'properties': {
+                                    'first_name':
+                                        {
+                                            'type': 'fulltext+keyword',
+                                            'minLength': 5,
+                                            'oarepo:ui': {
+                                                'default': {
+                                                    "component": "raw",
+                                                    "dataField": ""
 
-                    }, 'search': {
-                      "component": "raw",
-                      "dataField": ""
+                                                }, 'search': {
+                                                    "component": "raw",
+                                                    "dataField": ""
+                                                }
+                                            }
+                                        },
+                                    'bezui2': {
+                                        'type': 'fulltext+keyword',
+                                        'minLength': 5
+                                    },
+                                    'last_name':
+                                        {
+                                            'type': 'fulltext',
+                                            'minLength': 5,
+                                            'oarepo:ui': {
+                                                'detail': {
+                                                    "component": "raw",
+                                                    "dataField": ""
+
+                                                }, 'search': {
+                                                    "component": "raw",
+                                                    "dataField": ""
+                                                }
+                                            }
+                                        }
+                                },
+                                'oarepo:ui': {
+                                    'detail': {
+                                        'component': 'row',
+                                        'separator': '_',
+                                        'items': [
+                                            'first_name',
+                                            'last_name'
+                                        ]
+                                    },
+                                    'search': {
+                                        'component': 'column',
+                                        'items': [
+                                            'last_name',
+                                            'first_name',
+                                            'bezui2'
+                                        ]
+                                    }
+                                }
+                            },
+                            'bezui': {
+                                'type': 'fulltext',
+                                'minLength': 5
+                            },
+                            'title': {
+                                'type': 'fulltext',
+                                'minLength': 5,
+                                'oarepo:sample': {
+                                    'faker': 'name'
+                                },
+                                'oarepo:ui': {
+                                    'detail': {
+                                        'component': 'raw',
+                                        'dataField': ""
+                                    },
+                                    'search': {
+                                        'component': 'truncated-text',
+                                        'dataField': "",
+                                        'lines': 3
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
-              },
-            'bezui2':{
-                'type': 'fulltext+keyword',
-                'minLength': 5
             },
-              'last_name':
-                      {
-                'type': 'fulltext',
-                'minLength':  5,
-                        'oarepo:ui':{
-                  'detail': {
-                      "component": "raw",
-                      "dataField": ""
-
-                    }, 'search': {
-                      "component": "raw",
-                      "dataField": ""
-                    }
-                }
-              }
-            },
-            'oarepo:ui': {
-              'detail': {
-                'component': 'row',
-                'separator': '_',
-                'items': [
-                  'first_name',
-                  'last_name'
-                ]
-              },
-              'search': {
-                'component': 'column',
-                'items': [
-                 'last_name',
-                'first_name',
-                    'bezui2'
-                ]
-              }
-            }
-          },
-          'bezui': {
-            'type': 'fulltext',
-            'minLength': 5
-          },
-          'title': {
-            'type': 'fulltext',
-            'minLength': 5,
             'oarepo:sample': {
-              'faker': 'name'
-          },
-            'oarepo:ui': {
-            'detail': {
-              'component': 'raw',
-              'dataField': ""
+                'count': 50
             },
-              'search': {
-                'component': 'truncated-text',
-              'dataField': "",
-              'lines': 3
-              }
+            'oarepo:ui': {
+
+
             }
-          }
-        }
-      }
-    }
-  },
-  'oarepo:sample': {
-    'count': 50
-  },
-  'oarepo:ui': {
-    'detail': {
-      'component': 'column',
-      'items': [
-        {
-    "component": "icon",
-    "name": "thumbs up",
-    "color": "green",
-    "size": "large"
-  }, 'author', 'title'
-      ]
-    },
-    'search': {
-      'component': 'row',
-      'items': [
-            {
-      "component": "icon",
-    "name": "thumbs up",
-    "color": "green",
-    "size": "large"
-              },
-        'author',
-        'title',
-        'bezui'
-      ]
-    }
+        },
+        isort=False,
+        black=False,
+    )
 
+    filesystem = MockFilesystem()
+    builder = create_builder_from_entrypoints(filesystem=filesystem)
 
-  }
-},
+    builder.build(schema, "")
+    # data = builder.filesystem.open(os.path.join("test", "records", "mappings", "v7", "test", "test-1.0.0.json")).read()
+    data = builder.filesystem.open(os.path.join("ui", "layout.yaml")).read()
+    data = json.loads(data)
+    assert  data == {}
+
+    schema = load_model(
+        "test.yaml",
+        "test",
+        model_content={
+            "oarepo:use": "invenio",
+            'settings': {
+                'package': 'record_test',
+            },
+            'model': {
+                'properties': {
+                    'metadata': {
+                        'properties': {
+                            'title': {
+                                'type': 'fulltext',
+                                'minLength': 5,
+                                'oarepo:sample': {
+                                    'faker': 'name'
+                                },
+                                'oarepo:ui': {
+                                    'detail': {
+                                        'component': 'raw',
+                                        'dataField': ""
+                                    },
+                                    'search': {
+                                        'component': 'truncated-text',
+                                        'dataField': "",
+                                        'lines': 3
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            'oarepo:sample': {
+                'count': 50
+            }
+        },
+        isort=False,
+        black=False,
+    )
+
+    filesystem = MockFilesystem()
+    builder = create_builder_from_entrypoints(filesystem=filesystem)
+
+    builder.build(schema, "")
+    # data = builder.filesystem.open(os.path.join("test", "records", "mappings", "v7", "test", "test-1.0.0.json")).read()
+    data = builder.filesystem.open(os.path.join("ui", "layout.yaml")).read()
+    data = json.loads(data)
+    assert  data == {}
+def test_layout():
+    schema = load_model(
+        "test.yaml",
+        "test",
+        model_content={
+            "oarepo:use": "invenio",
+            'settings': {
+                'package': 'record_test',
+            },
+            'model': {
+                'properties': {
+                    'metadata': {
+                        'properties': {
+                            'author': {
+                                'type': 'object',
+                                'properties': {
+                                    'first_name':
+                                        {
+                                            'type': 'fulltext+keyword',
+                                            'minLength': 5,
+                                            'oarepo:ui': {
+                                                'default': {
+                                                    "component": "raw",
+                                                    "dataField": ""
+
+                                                }, 'search': {
+                                                    "component": "raw",
+                                                    "dataField": ""
+                                                }
+                                            }
+                                        },
+                                    'bezui2': {
+                                        'type': 'fulltext+keyword',
+                                        'minLength': 5
+                                    },
+                                    'last_name':
+                                        {
+                                            'type': 'fulltext',
+                                            'minLength': 5,
+                                            'oarepo:ui': {
+                                                'detail': {
+                                                    "component": "raw",
+                                                    "dataField": ""
+
+                                                }, 'search': {
+                                                    "component": "raw",
+                                                    "dataField": ""
+                                                }
+                                            }
+                                        }
+                                },
+                                'oarepo:ui': {
+                                    'detail': {
+                                        'component': 'row',
+                                        'separator': '_',
+                                        'items': [
+                                            'first_name',
+                                            'last_name'
+                                        ]
+                                    },
+                                    'search': {
+                                        'component': 'column',
+                                        'items': [
+                                            'last_name',
+                                            'first_name',
+                                            'bezui2'
+                                        ]
+                                    }
+                                }
+                            },
+                            'bezui': {
+                                'type': 'fulltext',
+                                'minLength': 5
+                            },
+                            'title': {
+                                'type': 'fulltext',
+                                'minLength': 5,
+                                'oarepo:sample': {
+                                    'faker': 'name'
+                                },
+                                'oarepo:ui': {
+                                    'detail': {
+                                        'component': 'raw',
+                                        'dataField': ""
+                                    },
+                                    'search': {
+                                        'component': 'truncated-text',
+                                        'dataField': "",
+                                        'lines': 3
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            'oarepo:sample': {
+                'count': 50
+            },
+            'oarepo:ui': {
+                'detail': {
+                    'component': 'column',
+                    'items': [
+                        {
+                            "component": "icon",
+                            "name": "thumbs up",
+                            "color": "green",
+                            "size": "large"
+                        }, 'author', 'title'
+                    ]
+                },
+                'search': {
+                    'component': 'row',
+                    'items': [
+                        {
+                            "component": "icon",
+                            "name": "thumbs up",
+                            "color": "green",
+                            "size": "large"
+                        },
+                        'author',
+                        'title',
+                        'bezui'
+                    ]
+                }
+
+            }
+        },
         isort=False,
         black=False,
     )
@@ -247,5 +414,3 @@ def test_mapping():
     }
 
     assert data == expected
-
-

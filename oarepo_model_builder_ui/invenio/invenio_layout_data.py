@@ -17,15 +17,16 @@ class InvenioLayoutBuilder(JSONBaseBuilder):
 
     def __init__(self, builder: ModelBuilder, property_preprocessors: List[PropertyPreprocessor]):
         super().__init__(builder, property_preprocessors)
-        self.ui = {}
-        self.ui = self.builder.schema.schema['oarepo:ui'] #top oarepo:ui
-
+        self.ui = self.builder.schema.schema.get('oarepo:ui', {})
+        # self.ui = self.builder.schema.schema['oarepo:ui'] #top oarepo:ui
         self.data = {}
         self.collected = []
 
 
     @process("/model/**", condition=lambda current, stack: stack.schema_valid)
     def model_element(self):
+        if self.ui == {}:
+            return
         schema_element_type = self.stack.top.schema_element_type
 
         if schema_element_type == "property":
