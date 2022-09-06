@@ -59,25 +59,7 @@ def test_missing_ui():
                             'author': {
                                 'type': 'object',
                                 'properties': {
-                                    'first_name':
-                                        {
-                                            'type': 'fulltext+keyword',
-                                            'minLength': 5,
-                                            'oarepo:ui': {
-                                                'default': {
-                                                    "component": "raw",
-                                                    "dataField": ""
 
-                                                }, 'search': {
-                                                    "component": "raw",
-                                                    "dataField": ""
-                                                }
-                                            }
-                                        },
-                                    'bezui2': {
-                                        'type': 'fulltext+keyword',
-                                        'minLength': 5
-                                    },
                                     'last_name':
                                         {
                                             'type': 'fulltext',
@@ -96,42 +78,17 @@ def test_missing_ui():
                                 },
                                 'oarepo:ui': {
                                     'detail': {
-                                        'component': 'row',
+                                        'component': 'raw',
                                         'separator': '_',
                                         'items': [
-                                            'first_name',
-                                            'last_name'
+
                                         ]
                                     },
                                     'search': {
                                         'component': 'column',
                                         'items': [
-                                            'last_name',
-                                            'first_name',
-                                            'bezui2'
+
                                         ]
-                                    }
-                                }
-                            },
-                            'bezui': {
-                                'type': 'fulltext',
-                                'minLength': 5
-                            },
-                            'title': {
-                                'type': 'fulltext',
-                                'minLength': 5,
-                                'oarepo:sample': {
-                                    'faker': 'name'
-                                },
-                                'oarepo:ui': {
-                                    'detail': {
-                                        'component': 'raw',
-                                        'dataField': ""
-                                    },
-                                    'search': {
-                                        'component': 'truncated-text',
-                                        'dataField': "",
-                                        'lines': 3
                                     }
                                 }
                             }
@@ -172,7 +129,7 @@ def test_missing_ui():
                 'properties': {
                     'metadata': {
                         'properties': {
-                            'title': {
+                            'jej': {
                                 'type': 'fulltext',
                                 'minLength': 5,
                                 'oarepo:sample': {
