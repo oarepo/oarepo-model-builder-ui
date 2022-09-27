@@ -5,7 +5,6 @@ import re
 import json5
 import pytest
 from oarepo_model_builder.entrypoints import load_model, create_builder_from_entrypoints
-# from tests.mock_filesystem import MockFilesystem
 from io import StringIO
 from pathlib import Path
 from typing import Dict
