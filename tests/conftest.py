@@ -1,5 +1,6 @@
 import pytest
 from invenio_app.factory import create_api as _create_api
+
 @pytest.fixture(scope="module")
 def extra_entry_points():
     """Extra entry points to load the mock_module features."""
