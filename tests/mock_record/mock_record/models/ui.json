@@ -1,0 +1,92 @@
+{
+    "children": {
+        "title": {
+            "detail": "fulltext",
+            "input": "fulltext",
+            "help": "title.help",
+            "label": "title.label",
+            "hint": "title.hint"
+        },
+        "prices": {
+            "detail": "array",
+            "input": "array",
+            "help": "prices.help",
+            "label": "prices.label",
+            "hint": "prices.hint",
+            "child": {
+                "detail": "double",
+                "input": "double"
+            }
+        },
+        "expires": {
+            "detail": "date",
+            "input": "date",
+            "help": "expires.help",
+            "label": "expires.label",
+            "hint": "expires.hint"
+        },
+        "lowest_price": {
+            "detail": "double",
+            "input": "double",
+            "help": "lowest_price.help",
+            "label": "lowest_price.label",
+            "hint": "lowest_price.hint"
+        },
+        "tags": {
+            "detail": "array",
+            "input": "array",
+            "help": "tags.help",
+            "label": "tags.label",
+            "hint": "tags.hint",
+            "child": {
+                "detail": "keyword",
+                "input": "keyword"
+            }
+        },
+        "providers": {
+            "detail": "array",
+            "input": "array",
+            "help": "prov",
+            "label": "providers.label",
+            "hint": "providers.hint",
+            "child": {
+                "detail": "provider",
+                "input": "provider",
+                "children": {
+                    "org_id": {
+                        "detail": "keyword",
+                        "input": "keyword",
+                        "help": "providers/org_id.help",
+                        "label": "providers/org_id.label",
+                        "hint": "providers/org_id.hint"
+                    },
+                    "name": {
+                        "detail": "keyword",
+                        "input": "keyword",
+                        "help": "providers/name.help",
+                        "label": "providers/name.label",
+                        "hint": "providers/name.hint"
+                    },
+                    "area": {
+                        "detail": "keyword",
+                        "input": "keyword",
+                        "help": "providers/area.help",
+                        "label": "providers/area.label",
+                        "hint": "providers/area.hint"
+                    },
+                    "tags": {
+                        "detail": "array",
+                        "input": "array",
+                        "help": "providers/tags.help",
+                        "label": "providers/tags.label",
+                        "hint": "providers/tags.hint",
+                        "child": {
+                            "detail": "keyword",
+                            "input": "keyword"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
