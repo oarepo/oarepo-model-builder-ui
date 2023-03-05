@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 if [ -d .venv-builder ] ; then 
     rm -rf .venv-builder
 fi

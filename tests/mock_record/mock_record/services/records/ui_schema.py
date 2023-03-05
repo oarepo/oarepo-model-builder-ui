@@ -1,5 +1,4 @@
 import marshmallow as ma
-from flask_resources import BaseObjectSchema
 from invenio_records_resources.services.records.schema import (
     BaseRecordSchema as InvenioBaseRecordSchema,
 )
@@ -21,7 +20,7 @@ class ProvidersItemUISchema(ma.Schema):
     tags = ma_fields.List(ma_fields.String())
 
 
-class MockRecordUISchema(BaseObjectSchema):
+class MockRecordUISchema(ma.Schema):
     """MockRecordUISchema schema."""
 
     title = ma_fields.String()

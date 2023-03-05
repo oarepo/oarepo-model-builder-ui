@@ -1,28 +1,58 @@
 {
     "model": {
         "type": "object",
-        "package-base": "mock_record",
-        "record-dumper-class": "mock_record.records.dumper.MockRecordDumper",
-        "config-resource-register-blueprint-key": "MOCK_RECORD_REGISTER_BLUEPRINT",
-        "create-blueprint-from-app": "mock_record.views.create_blueprint_from_app_mock_record",
-        "record-service-config-bases": [
-            "invenio_records_resources.services.RecordServiceConfig"
-        ],
+        "record-api-blueprints-setup-cfg": "mock_record",
+        "saved-model-file": "mock_record/models/model.json",
+        "config-resource-class-key": "MOCK_RECORD_RESOURCE_CLASS_MOCK_RECORD",
+        "proxies-current-resource": "mock_record.proxies.current_resource",
+        "invenio-record-permissions-extra-code": "",
+        "mapping-file": "mock_record/records/mappings/os-v2/mock_record/mock_record-1.0.0.json",
+        "record-mapping-setup-cfg": "mock_record",
         "invenio-record-resource-config-extra-code": "",
-        "invenio-record-search-options-extra-code": "",
-        "record-service-config-generate-links": true,
-        "config-service-class-key": "MOCK_RECORD_SERVICE_CLASS_MOCK_RECORD",
-        "record-facets-class": "mock_record.services.records.facets.Test",
-        "record-schema-class": "mock_record.services.records.schema.MockRecordSchema",
-        "record-metadata-table-name": "mockrecord_metadata",
-        "record-resource-config-bases": [
-            "invenio_records_resources.resources.RecordResourceConfig"
-        ],
-        "record-dumper-extensions": [],
-        "record-service-class": "mock_record.services.records.service.MockRecordService",
         "record-service-bases": [
             "invenio_records_resources.services.RecordService"
         ],
+        "record-blueprints-setup-cfg": "mock_record",
+        "invenio-record-schema-extra-code": "",
+        "record-schema-metadata-alembic": "mock_record",
+        "record-metadata-class": "mock_record.records.models.MockRecordMetadata",
+        "script-import-sample-data": "data/sample_data.yaml",
+        "invenio-record-resource-extra-code": "",
+        "record-facets-class": "mock_record.services.records.facets.Test",
+        "invenio-record-search-options-extra-code": "",
+        "ext-class": "mock_record.ext.MockRecordExt",
+        "invenio-record-extra-code": "",
+        "ui-layout": "mock_record/models/ui.json",
+        "oarepo-models-setup-cfg": "mock_record",
+        "package-base": "mock_record",
+        "package-path": "mock_record",
+        "record-dumper-extensions": [],
+        "record-schema-metadata-setup-cfg": "mock_record",
+        "invenio-record-service-config-extra-code": "",
+        "record-dumper-class": "mock_record.records.dumper.MockRecordDumper",
+        "record-ui-schema-metadata-class": "mock_record.services.records.ui_schema.MockRecordMetadataUISchema",
+        "record-schema-class": "mock_record.services.records.schema.MockRecordSchema",
+        "invenio-config-extra-code": "",
+        "record-services-package": "mock_record.services.records",
+        "schema-version": "1.0.0",
+        "invenio-version-extra-code": "",
+        "jsonschemas-package": "mock_record.records.jsonschemas",
+        "record-schema-metadata-class": "mock_record.services.records.schema.MockRecordMetadataSchema",
+        "kebap-package": "mock-record",
+        "invenio-record-dumper-extra-code": "",
+        "cli-function": "mock_record.cli.group",
+        "record-service-config-class": "mock_record.services.records.config.MockRecordServiceConfig",
+        "schema-file": "mock_record/records/jsonschemas/mock_record-1.0.0.json",
+        "record-search-options-class": "mock_record.services.records.search.MockRecordSearchOptions",
+        "index-name": "mock_record-mock_record-1.0.0",
+        "create-blueprint-from-app": "mock_record.views.create_blueprint_from_app_mock_record",
+        "record-resource-blueprint-name": "MockRecord",
+        "invenio-record-metadata-extra-code": "",
+        "service-id": "mock_record",
+        "config-package": "mock_record.config",
+        "config-service-class-key": "MOCK_RECORD_SERVICE_CLASS_MOCK_RECORD",
+        "proxies-current-service": "mock_record.proxies.current_service",
+        "record-class": "mock_record.records.api.MockRecordRecord",
         "properties": {
             "title": {
                 "marshmallow": {
@@ -30,9 +60,9 @@
                     "validators": [],
                     "imports": []
                 },
+                "label.en": "Title",
                 "label.cs": "Název",
-                "type": "fulltext",
-                "label.en": "Title"
+                "type": "fulltext"
             },
             "prices": {
                 "marshmallow": {
@@ -40,7 +70,6 @@
                     "validators": [],
                     "imports": []
                 },
-                "type": "array",
                 "items": {
                     "marshmallow": {
                         "field-class": "ma_fields.Float",
@@ -48,7 +77,8 @@
                         "imports": []
                     },
                     "type": "double"
-                }
+                },
+                "type": "array"
             },
             "expires": {
                 "marshmallow": {
@@ -74,9 +104,9 @@
                     "validators": [],
                     "imports": []
                 },
-                "type": "double",
+                "hint.en": "Enter the lowest price, should be in prices",
                 "hint.cs": "Vložte nejmenší cenu, měla by být v seznamu cen výše",
-                "hint.en": "Enter the lowest price, should be in prices"
+                "type": "double"
             },
             "tags": {
                 "marshmallow": {
@@ -84,7 +114,6 @@
                     "validators": [],
                     "imports": []
                 },
-                "type": "array",
                 "items": {
                     "marshmallow": {
                         "field-class": "ma_fields.String",
@@ -92,7 +121,8 @@
                         "imports": []
                     },
                     "type": "keyword"
-                }
+                },
+                "type": "array"
             },
             "providers": {
                 "marshmallow": {
@@ -100,9 +130,9 @@
                     "validators": [],
                     "imports": []
                 },
-                "type": "array",
                 "help.cs": "Seznam dodavatelů. Normálně tento popisek bude docela dlouhý, protože bude zobrazen v dialogovém okně",
                 "help.key": "prov",
+                "help.en": "A list of providers of this item. Normally this help text should be quite long as it is displayed in a dialog box",
                 "items": {
                     "marshmallow": {
                         "field-class": "ma_fields.Nested",
@@ -110,7 +140,6 @@
                         "schema-class": "mock_record.services.records.schema.ProvidersItemSchema",
                         "imports": []
                     },
-                    "type": "nested",
                     "properties": {
                         "org_id": {
                             "marshmallow": {
@@ -142,7 +171,6 @@
                                 "validators": [],
                                 "imports": []
                             },
-                            "type": "array",
                             "items": {
                                 "marshmallow": {
                                     "field-class": "ma_fields.String",
@@ -150,114 +178,86 @@
                                     "imports": []
                                 },
                                 "type": "keyword"
-                            }
+                            },
+                            "type": "array"
                         }
-                    }
+                    },
+                    "type": "nested"
                 },
-                "help.en": "A list of providers of this item. Normally this help text should be quite long as it is displayed in a dialog box"
+                "type": "array"
             }
         },
-        "config-resource-config-key": "MOCK_RECORD_RESOURCE_CONFIG_MOCK_RECORD",
-        "record-resource-config-class": "mock_record.resources.records.config.MockRecordResourceConfig",
-        "extension-suffix": "mock_record",
-        "mapping-file": "mock_record/records/mappings/os-v2/mock_record/mock_record-1.0.0.json",
-        "record-schema-metadata-setup-cfg": "mock_record",
-        "invenio-views-extra-code": "",
-        "record-ui-schema-metadata-class": "mock_record.services.records.ui_schema.MockRecordMetadataUISchema",
-        "record-api-blueprints-setup-cfg": "mock_record",
-        "package": "mock_record",
-        "record-service-config-class": "mock_record.services.records.config.MockRecordServiceConfig",
-        "permissions": {
-            "presets": []
-        },
-        "config-package": "mock_record.config",
-        "record-bases": [
-            "invenio_records_resources.records.api.Record"
+        "record-resource-config-bases": [
+            "invenio_records_resources.resources.RecordResourceConfig"
         ],
-        "invenio-proxies-extra-code": "",
-        "generate-record-pid-field": true,
-        "package-base-upper": "MOCK_RECORD",
-        "flask-commands-setup-cfg": "mock_record",
-        "translations-setup-cfg": "mock_record",
-        "record-resource-blueprint-name": "MockRecord",
+        "config-resource-config-key": "MOCK_RECORD_RESOURCE_CONFIG_MOCK_RECORD",
+        "record-service-config-generate-links": true,
+        "record-service-class": "mock_record.services.records.service.MockRecordService",
+        "config-service-config-key": "MOCK_RECORD_SERVICE_CONFIG_MOCK_RECORD",
         "record-resource-bases": [
             "invenio_records_resources.resources.RecordResource"
         ],
-        "schema-version": "1.0.0",
-        "record-mapping-setup-cfg": "mock_record",
-        "invenio-record-facets-extra-code": "",
-        "invenio-record-resource-extra-code": "",
-        "record-resource-class": "mock_record.resources.records.resource.MockRecordResource",
-        "record-services-package": "mock_record.services.records",
-        "invenio-ext-extra-code": "",
-        "record-resources-package": "mock_record.resources.records",
-        "invenio-record-schema-extra-code": "",
-        "profile-package": "records",
-        "config-dummy-class": "mock_record.config.DummyClass",
-        "flask-extension-name": "mock_record",
-        "proxies-current-service": "mock_record.proxies.current_service",
-        "jsonschemas-package": "mock_record.records.jsonschemas",
-        "kebap-package": "mock-record",
-        "model-name": "mock_record",
-        "cli-function": "mock_record.cli.group",
-        "proxies-current-resource": "mock_record.proxies.current_resource",
-        "config-service-config-key": "MOCK_RECORD_SERVICE_CONFIG_MOCK_RECORD",
-        "invenio-record-dumper-extra-code": "",
-        "invenio-record-permissions-extra-code": "",
-        "record-jsonschemas-setup-cfg": "mock_record",
-        "record-metadata-class": "mock_record.records.models.MockRecordMetadata",
-        "invenio-record-object-schema-extra-code": "",
-        "invenio-record-service-extra-code": "",
-        "record-ui-serializer-class": "mock_record.resources.records.ui.MockRecordUIJSONSerializer",
-        "record-ui-schema-class": "mock_record.services.records.ui_schema.MockRecordUISchema",
-        "record-prefix-snake": "mock_record",
-        "invenio-config-extra-code": "",
-        "record-search-options-class": "mock_record.services.records.search.MockRecordSearchOptions",
-        "record-schema-metadata-class": "mock_record.services.records.schema.MockRecordMetadataSchema",
-        "mapping-package": "mock_record.records.mappings",
-        "record-records-package": "mock_record.records",
-        "schema-name": "mock_record-1.0.0.json",
-        "script-import-sample-data": "data/sample_data.yaml",
-        "record-blueprints-setup-cfg": "mock_record",
-        "saved-model-file": "mock_record/models/model.json",
-        "collection-url": "/mock-record/",
-        "schema-server": "http://localhost/schemas/",
-        "invenio-record-extra-code": "",
-        "record-schema-metadata-alembic": "mock_record",
-        "ext-class": "mock_record.ext.MockRecordExt",
+        "marshmallow": {
+            "generate": true,
+            "schema-class": "mock_record.services.records.schema.MockRecordSchema",
+            "base-classes": [
+                "ma.Schema"
+            ]
+        },
+        "record-resource-config-class": "mock_record.resources.records.config.MockRecordResourceConfig",
         "record-prefix": "MockRecord",
-        "invenio-record-metadata-extra-code": "",
+        "package-base-upper": "MOCK_RECORD",
+        "permissions": {
+            "presets": []
+        },
+        "invenio-record-facets-extra-code": "",
+        "generate-record-pid-field": true,
+        "record-prefix-snake": "mock_record",
+        "profile-package": "records",
+        "record-jsonschemas-setup-cfg": "mock_record",
+        "record-service-config-bases": [
+            "invenio_records_resources.services.RecordServiceConfig"
+        ],
+        "record-bases": [
+            "invenio_records_resources.records.api.Record"
+        ],
+        "invenio-record-service-extra-code": "",
+        "invenio-views-extra-code": "",
         "record-permissions-class": "mock_record.services.records.permissions.MockRecordPermissionPolicy",
+        "translations-setup-cfg": "mock_record",
+        "record-resources-package": "mock_record.resources.records",
+        "flask-extension-name": "mock_record",
+        "record-resource-class": "mock_record.resources.records.resource.MockRecordResource",
+        "record-metadata-table-name": "mockrecord_metadata",
+        "invenio-record-object-schema-extra-code": "",
+        "flask-commands-setup-cfg": "mock_record",
+        "invenio-ext-extra-code": "",
         "ui": {
             "marshmallow": {
                 "generate": true,
+                "schema-class": "mock_record.services.records.ui_schema.MockRecordUISchema",
                 "base-classes": [
-                    "BaseObjectSchema"
-                ],
-                "schema-class": "mock_record.services.records.ui_schema.MockRecordUISchema"
+                    "ma.Schema"
+                ]
             }
         },
-        "index-name": "mock_record-mock_record-1.0.0",
-        "schema-file": "mock_record/records/jsonschemas/mock_record-1.0.0.json",
-        "oarepo-models-setup-cfg": "mock_record",
-        "config-resource-class-key": "MOCK_RECORD_RESOURCE_CLASS_MOCK_RECORD",
-        "record-class": "mock_record.records.api.MockRecordRecord",
-        "marshmallow": {
-            "generate": true,
-            "base-classes": [
-                "ma.Schema"
-            ],
-            "schema-class": "mock_record.services.records.schema.MockRecordSchema"
-        },
-        "service-id": "mock_record",
-        "ui-layout": "mock_record/models/ui.json",
-        "invenio-record-service-config-extra-code": "",
-        "invenio-version-extra-code": "",
-        "package-path": "mock_record",
+        "collection-url": "/mock-record/",
+        "record-records-package": "mock_record.records",
+        "mapping-package": "mock_record.records.mappings",
+        "config-resource-register-blueprint-key": "MOCK_RECORD_REGISTER_BLUEPRINT",
+        "model-name": "mock_record",
+        "schema-name": "mock_record-1.0.0.json",
+        "schema-server": "http://localhost/schemas/",
+        "record-ui-schema-class": "mock_record.services.records.ui_schema.MockRecordUISchema",
+        "package": "mock_record",
+        "config-dummy-class": "mock_record.config.DummyClass",
+        "extension-suffix": "mock_record",
+        "record-ui-serializer-class": "mock_record.resources.records.ui.MockRecordUIJSONSerializer",
+        "invenio-proxies-extra-code": "",
         "known-classes": {
-            "mock_record.services.records.schema.MockRecordSchema": "eeda9bcd0ef195b799ddfabbb6e33939b19da1c58d5aa1cf28538127b58fe7f7",
+            "mock_record.services.records.schema.MockRecordSchema": "7cbc3a78e7e7b1cb3a6db3ebbfc36c09ec02864446e598b54036500bc6a29121",
             "mock_record.services.records.schema.ProvidersItemSchema": "21f51f9262ae400f471a9a4a12e018e2d0125c2965fd7195ca2cb61515b9c06f",
-            "mock_record.services.records.ui_schema.MockRecordUISchema": "79d34dfd93cf0b9f9fbb3b048a9f4bb1d8dc3e4c043b4a994ae4b0f80ed689b9",
+            "mock_record.services.records.ui_schema.MockRecordUISchema": "b3c94c7f709f29f277f0a68eb8afe098d66403fa4dc1e849758f7c85f454dfb9",
             "mock_record.services.records.ui_schema.ProvidersItemUISchema": "21f51f9262ae400f471a9a4a12e018e2d0125c2965fd7195ca2cb61515b9c06f"
         }
     }

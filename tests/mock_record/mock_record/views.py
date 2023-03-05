@@ -3,10 +3,7 @@ from flask import Blueprint
 
 def create_blueprint_from_app_mock_record(app):
     """Create  blueprint."""
-    if app.config.get("MOCK_RECORD_REGISTER_BLUEPRINT", True):
-        blueprint = app.extensions["mock_record"].resource.as_blueprint()
-    else:
-        blueprint = Blueprint("mock_record", __name__, url_prefix="/empty/mock_record")
+    blueprint = app.extensions["mock_record"].resource.as_blueprint()
     blueprint.record_once(init_create_blueprint_from_app_mock_record)
 
     # calls record_once for all other functions starting with "init_addons_"
@@ -36,3 +33,22 @@ def init_create_blueprint_from_app_mock_record(state):
     if hasattr(ext.service, "indexer"):
         iregistry = app.extensions["invenio-indexer"].registry
         iregistry.register(ext.service.indexer, indexer_id="mock_record")
+
+
+def create_blueprint_from_app_mock_recordExt(app):
+    """Create -ext blueprint."""
+    blueprint = Blueprint("mock_record-ext", __name__, url_prefix="mock_record")
+    blueprint.record_once(init_create_blueprint_from_app_mock_record)
+
+    # calls record_once for all other functions starting with "init_app_addons_"
+    # https://stackoverflow.com/questions/58785162/how-can-i-call-function-with-string-value-that-equals-to-function-name
+    funcs = globals()
+    funcs = [
+        v
+        for k, v in funcs.items()
+        if k.startswith("init_app_addons_mock_record") and callable(v)
+    ]
+    for func in funcs:
+        blueprint.record_once(func)
+
+    return blueprint
