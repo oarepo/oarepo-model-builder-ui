@@ -31,6 +31,7 @@ title:
   ui:
     detail: <detail component name>
     edit: <edit component name>
+    // any other property here - not validated
 ```
 
 The following files are generated:

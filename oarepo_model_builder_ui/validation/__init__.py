@@ -31,6 +31,9 @@ class UIPropertySection(ma.Schema):
     detail = ma_fields.String(required=False)
     edit = ma_fields.String(required=False)
 
+    class Meta:
+        unknown = ma.INCLUDE
+
 
 class UIPropertySectionValidator(ma.Schema):
     ui = ma_fields.Nested(UIPropertySection, required=False)

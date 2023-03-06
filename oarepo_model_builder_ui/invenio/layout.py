@@ -42,7 +42,7 @@ class InvenioLayoutBuilder(JSONBaseBuilder):
         schema_element_type = self.stack.top.schema_element_type
 
         if isinstance(data, dict):
-            ui.update(data.get("ui", {}))
+            ui.update({k.replace("-", "_"): v for k, v in data.get("ui", {}).items()})
             if "type" in data:
                 t = data["type"]
                 if t in ("object", "nested"):
