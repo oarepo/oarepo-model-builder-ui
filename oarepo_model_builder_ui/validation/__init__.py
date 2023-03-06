@@ -10,6 +10,7 @@ def create_ui_property_validator():
     for fld in UI_ITEMS:
         for lang in ["key", *CLDR_LANGUAGES]:
             fields[f"{fld}.{lang}"] = ma_fields.String(required=False)
+    fields["i18n.key"] = ma_fields.String(required=False)
     return type("UIPropertyValidator", (ma.Schema,), fields)
 
 
@@ -40,7 +41,8 @@ class UIPropertySectionValidator(ma.Schema):
 
 
 validators = {
-    "property": [UIPropertyValidator, UIPropertySectionValidator],
+    "property-ui": [UIPropertySection],
+    "property": [UIPropertyValidator],
     "settings": [UISettingsValidator],
     "model": [ModelSettingsValidator],
 }

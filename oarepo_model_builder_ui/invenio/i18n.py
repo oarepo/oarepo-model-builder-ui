@@ -35,16 +35,20 @@ class InvenioI18nBuilder(OutputBuilder):
                 for ui in UI_ITEMS:
                     if el.startswith(f"{ui}."):
                         ui_items[ui][el[len(ui) + 1 :]] = val
+            key_proto = self.stack.top.data.get("i18n.key")
             for ui in UI_ITEMS:
                 if "key" not in ui_items[ui]:
-                    ui_items[ui]["key"] = (
-                        "/".join(
-                            x.key
-                            for x in self.stack
-                            if x.schema_element_type == "property" and x.key
+                    if key_proto:
+                        ui_items[ui]["key"] = f"{key_proto}.{ui}"
+                    else:
+                        ui_items[ui]["key"] = (
+                            "/".join(
+                                x.key
+                                for x in self.stack
+                                if x.schema_element_type == "property" and x.key
+                            )
+                            + f".{ui}"
                         )
-                        + f".{ui}"
-                    )
             for ui, langs in ui_items.items():
                 key = langs.pop("key")
                 for lang, val in langs.items():
