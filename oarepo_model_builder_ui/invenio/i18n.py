@@ -21,9 +21,10 @@ class InvenioI18nBuilder(OutputBuilder):
 
     def begin(self, schema, settings):
         super().begin(schema, settings)
-        self.output = self.builder.get_output(
-            "po", Path(self.current_model.package) / "translations"
-        )
+
+        mod = self.current_model.package.split(".")
+        path = Path(*mod)
+        self.output = self.builder.get_output("po", path / "translations")
 
     @process("**", condition=lambda current, stack: stack.schema_valid)
     def model_element(self):
