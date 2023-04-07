@@ -1,11 +1,7 @@
+from flask_babelex import lazy_gettext as _
 from invenio_records_resources.services import SearchOptions as InvenioSearchOptions
 
 from . import facets
-
-
-def _(x):
-    """Identity function for string extraction."""
-    return x
 
 
 class MockRecordSearchOptions(InvenioSearchOptions):
@@ -20,6 +16,7 @@ class MockRecordSearchOptions(InvenioSearchOptions):
         "providers_name": facets.providers_name,
         "providers_area": facets.providers_area,
         "providers_tags": facets.providers_tags,
+        "en": facets.en,
     }
     sort_options = {
         **InvenioSearchOptions.sort_options,

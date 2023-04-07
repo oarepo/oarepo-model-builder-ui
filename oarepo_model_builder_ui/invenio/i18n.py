@@ -50,6 +50,22 @@ class InvenioI18nBuilder(OutputBuilder):
                             )
                             + f".{ui}"
                         )
+
+            # add translation for enums
+            enum_keys = self.stack.top.data.get("enum", [])
+            for en in enum_keys:
+                if key_proto:
+                    ui_items[en]["key"] = f"{key_proto}.enum.{en}"
+                else:
+                    ui_items[en]["key"] = (
+                        "/".join(
+                            x.key
+                            for x in self.stack
+                            if x.schema_element_type == "property" and x.key
+                        )
+                        + f".enum.{en}"
+                    )
+
             for ui, langs in ui_items.items():
                 key = langs.pop("key")
                 for lang, val in langs.items():

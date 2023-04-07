@@ -35,6 +35,10 @@
         "^help.en": "A list of providers of this item. Normally this help text should be quite long as it is displayed in a dialog box",
         "^help.cs": "Seznam dodavatelů. Normálně tento popisek bude docela dlouhý, protože bude zobrazen v dialogovém okně",
         "^help.key": "prov"
+      },
+      "en": {
+        "type": "keyword",
+        "enum": ["a", "b", "c"]
       }
     }
   }

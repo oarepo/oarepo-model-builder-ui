@@ -45,6 +45,14 @@
                 "type": "object"
             },
             "type": "array"
+        },
+        "en": {
+            "enum": [
+                "a",
+                "b",
+                "c"
+            ],
+            "type": "string"
         }
     }
 }

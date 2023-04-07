@@ -29,3 +29,4 @@ class MockRecordSchema(ma.Schema):
     lowest_price = ma_fields.Float()
     tags = ma_fields.List(ma_fields.String())
     providers = ma_fields.List(ma_fields.Nested(lambda: ProvidersItemSchema()))
+    en = ma_fields.String(validate=[ma_validate.OneOf(["a", "b", "c"])])

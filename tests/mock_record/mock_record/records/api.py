@@ -10,12 +10,12 @@ from mock_record.records.models import MockRecordMetadata
 class MockRecordRecord(Record):
     model_cls = MockRecordMetadata
 
-    schema = ConstantField("$schema", "http://localhost/schemas/mock_record-1.0.0.json")
+    schema = ConstantField("$schema", "local://mock_record-1.0.0.json")
 
     index = IndexField("mock_record-mock_record-1.0.0")
 
     pid = PIDField(
-        create=True, provider=RecordIdProviderV2, context_cls=PIDFieldContext
+        provider=RecordIdProviderV2, context_cls=PIDFieldContext, create=True
     )
 
     dumper_extensions = []

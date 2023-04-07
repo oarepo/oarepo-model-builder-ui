@@ -32,6 +32,9 @@
                     }
                 },
                 "type": "nested"
+            },
+            "en": {
+                "type": "keyword"
             }
         }
     }

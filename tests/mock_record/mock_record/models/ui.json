@@ -1,6 +1,9 @@
 {
     "children": {
         "title": {
+            "marshmallow": {
+                "field-class": "ma_fields.String"
+            },
             "detail": "fulltext",
             "input": "fulltext",
             "help": "title.help",
@@ -8,17 +11,26 @@
             "hint": "title.hint"
         },
         "prices": {
+            "marshmallow": {
+                "field-class": "ma_fields.List"
+            },
             "detail": "array",
             "input": "array",
             "help": "prices.help",
             "label": "prices.label",
             "hint": "prices.hint",
             "child": {
+                "marshmallow": {
+                    "field-class": "ma_fields.Float"
+                },
                 "detail": "double",
                 "input": "double"
             }
         },
         "expires": {
+            "marshmallow": {
+                "field-class": "l10n.LocalizedDate"
+            },
             "detail": "date",
             "input": "date",
             "help": "expires.help",
@@ -26,6 +38,9 @@
             "hint": "expires.hint"
         },
         "lowest_price": {
+            "marshmallow": {
+                "field-class": "ma_fields.Float"
+            },
             "detail": "double",
             "input": "double",
             "help": "lowest_price.help",
@@ -33,27 +48,43 @@
             "hint": "lowest_price.hint"
         },
         "tags": {
+            "marshmallow": {
+                "field-class": "ma_fields.List"
+            },
             "detail": "array",
             "input": "array",
             "help": "tags.help",
             "label": "tags.label",
             "hint": "tags.hint",
             "child": {
+                "marshmallow": {
+                    "field-class": "ma_fields.String"
+                },
                 "detail": "keyword",
                 "input": "keyword"
             }
         },
         "providers": {
+            "marshmallow": {
+                "field-class": "ma_fields.List"
+            },
             "detail": "array",
             "input": "array",
             "help": "prov",
             "label": "providers.label",
             "hint": "providers.hint",
             "child": {
+                "marshmallow": {
+                    "schema-class": "mock_record.services.records.ui_schema.ProvidersItemUISchema",
+                    "field-class": "ma_fields.Nested"
+                },
                 "detail": "provider",
                 "input": "provider",
                 "children": {
                     "org_id": {
+                        "marshmallow": {
+                            "field-class": "ma_fields.String"
+                        },
                         "detail": "keyword",
                         "input": "keyword",
                         "help": "providers/org_id.help",
@@ -61,6 +92,9 @@
                         "hint": "providers/org_id.hint"
                     },
                     "name": {
+                        "marshmallow": {
+                            "field-class": "ma_fields.String"
+                        },
                         "detail": "keyword",
                         "input": "keyword",
                         "help": "providers/name.help",
@@ -68,6 +102,9 @@
                         "hint": "providers/name.hint"
                     },
                     "area": {
+                        "marshmallow": {
+                            "field-class": "ma_fields.String"
+                        },
                         "detail": "keyword",
                         "input": "keyword",
                         "help": "providers/area.help",
@@ -75,18 +112,37 @@
                         "hint": "providers/area.hint"
                     },
                     "tags": {
+                        "marshmallow": {
+                            "field-class": "ma_fields.List"
+                        },
                         "detail": "array",
                         "input": "array",
                         "help": "providers/tags.help",
                         "label": "providers/tags.label",
                         "hint": "providers/tags.hint",
                         "child": {
+                            "marshmallow": {
+                                "field-class": "ma_fields.String"
+                            },
                             "detail": "keyword",
                             "input": "keyword"
                         }
                     }
                 }
             }
+        },
+        "en": {
+            "marshmallow": {
+                "field-class": "l10n.LocalizedEnum",
+                "arguments": [
+                    "value_prefix=\"mock_record\""
+                ]
+            },
+            "detail": "keyword",
+            "input": "keyword",
+            "help": "en.help",
+            "label": "en.label",
+            "hint": "en.hint"
         }
     }
 }

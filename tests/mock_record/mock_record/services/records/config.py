@@ -22,7 +22,6 @@ class MockRecordServiceConfig(RecordServiceConfig):
     search = MockRecordSearchOptions
 
     record_cls = MockRecordRecord
-    # todo should i leave this here?
     service_id = "mock_record"
 
     components = [*RecordServiceConfig.components]

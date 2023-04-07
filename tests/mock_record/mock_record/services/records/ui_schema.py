@@ -8,6 +8,7 @@ from marshmallow import validate as ma_validate
 from marshmallow_utils import fields as mu_fields
 from marshmallow_utils import schemas as mu_schemas
 from oarepo_runtime.ui import marshmallow as l10n
+from oarepo_runtime.ui.marshmallow import InvenioUISchema
 from oarepo_runtime.validation import validate_date
 
 
@@ -29,3 +30,4 @@ class MockRecordUISchema(ma.Schema):
     lowest_price = ma_fields.Float()
     tags = ma_fields.List(ma_fields.String())
     providers = ma_fields.List(ma_fields.Nested(lambda: ProvidersItemUISchema()))
+    en = l10n.LocalizedEnum(value_prefix="mock_record")
