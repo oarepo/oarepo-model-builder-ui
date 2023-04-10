@@ -9,10 +9,13 @@ class POWrapper:
     wrapper for polib.POFile that adds lookup dictionary for entries (to speed up adding new entries)
     """
 
-    def __init__(self, po) -> None:
+    def __init__(self, po, remove_empty=False) -> None:
         self.po = po
         self.lookup = {}
-        for entry in po:
+        for entry in list(po):
+            if remove_empty and not entry.msgstr:
+                po.remove(entry)
+                continue
             self.lookup[entry.msgid] = entry
 
     def add(self, key, value):
@@ -48,7 +51,9 @@ class POOutput(OutputBase):
     def _init_lang_path(self, lang, lang_path):
         if self.builder.filesystem.exists(lang_path):
             with self.builder.filesystem.open(lang_path) as f:
-                self.po_files[lang] = POWrapper(polib.pofile(f.read()))
+                self.po_files[lang] = POWrapper(
+                    polib.pofile(f.read()), remove_empty=True
+                )
         else:
             po_file = polib.POFile()
             po_file.metadata = {

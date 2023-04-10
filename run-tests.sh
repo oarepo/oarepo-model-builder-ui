@@ -14,7 +14,12 @@ if [ -d tests/mock_record ] ; then
     rm -rf tests/mock_record
 fi
 
+.venv-builder/bin/oarepo-merge tests/merged_messages.po  tests/mock_record/mock_record/translations/cs/LC_MESSAGES/messages.po
 .venv-builder/bin/oarepo-compile-model tests/model.json --output-directory tests/mock_record -vvv
+
+# check that the messages were merged correctly
+grep -q 'blah' tests/mock_record/mock_record/translations/cs/LC_MESSAGES/messages.po
+grep -q -v 'empty' tests/mock_record/mock_record/translations/cs/LC_MESSAGES/messages.po
 
 if [ -d .venv ] ; then 
     rm -rf .venv
