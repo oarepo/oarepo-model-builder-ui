@@ -6,6 +6,7 @@ from oarepo_model_builder.builder import ModelBuilder
 from oarepo_model_builder.builders import process
 from oarepo_model_builder.builders.json_base import JSONBaseBuilder
 from oarepo_model_builder.property_preprocessors import PropertyPreprocessor
+from oarepo_model_builder.invenio.invenio_record_search import get_facet_details
 from oarepo_model_builder.utils.verbose import log
 
 from oarepo_model_builder_ui.config import UI_ITEMS
@@ -23,7 +24,7 @@ metadata: {
   child: {
     ...
   }
-}
+
 // invenio_stuff_here
 
 it will be saved to package/model/ui.json
@@ -68,6 +69,13 @@ class InvenioLayoutBuilder(JSONBaseBuilder):
                     )
                     + f".{fld}",
                 )
+
+            facets = get_facet_details(
+                self.stack, self.current_model, self.schema, set()
+            )
+
+            if len(facets):
+                ui["facet"] = facets[0]["path"]
 
             self.output.enter(self.stack.top.key, {})
         elif schema_element_type == "properties":
