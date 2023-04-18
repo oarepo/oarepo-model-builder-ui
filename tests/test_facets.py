@@ -45,4 +45,5 @@ def test_facets(app):
     assert ui_json is not None
 
     ui_spec = json.loads(ui_json)
+    print(ui_spec)
     assert ui_spec["b"]["children"]["c"]["facet"] == "b_c"
