@@ -29,6 +29,6 @@ python3 -m venv .venv
 
 source .venv/bin/activate
 pip install -e 'tests/mock_record'
-pip install pytest-invenio invenio-app 'invenio-search[opensearch2]' flask-babelex oarepo-model-builder polib
+pip install pytest-invenio invenio-app 'invenio-search[opensearch2]' flask-babelex oarepo-model-builder polib inflect
 
 pytest tests
