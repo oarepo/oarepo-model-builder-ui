@@ -46,4 +46,4 @@ def test_facets(app):
 
     ui_spec = json.loads(ui_json)
     print(ui_spec)
-    assert ui_spec["b"]["children"]["c"]["facet"] == "b_c"
+    assert ui_spec["children"]["b"]["children"]["c"]["facet"] == "b_c"
