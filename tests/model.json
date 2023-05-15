@@ -2,8 +2,10 @@
   "settings": {
     "i18n-languages": ["en", "cs"]
   },
-  "model": {
-    "package": "mock_record",
+  "record": {
+    "module": {
+      "qualified": "mock_record"
+    },
     "properties": {
       "title": {
         "type": "fulltext",

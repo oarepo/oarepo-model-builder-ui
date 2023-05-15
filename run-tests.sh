@@ -2,11 +2,10 @@
 
 set -e
 
-if [ -d .venv-builder ]; then
-    rm -rf .venv-builder
+if [ ! -d .venv-builder ]; then
+  python3 -m venv .venv-builder
 fi
 
-python3 -m venv .venv-builder
 
 .venv-builder/bin/pip install -e .
 
