@@ -16,6 +16,6 @@ class InvenioI18NSetupCfgBuilder(OutputBuilder):
 
         output.add_entry_point(
             "invenio_i18n.translations",
-            config['alias'],
-            config['module'],
+            config["alias"],
+            config["module"].rsplit(".", maxsplit=1)[0],
         )

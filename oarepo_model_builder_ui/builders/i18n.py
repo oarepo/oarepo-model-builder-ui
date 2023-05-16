@@ -5,6 +5,7 @@ from oarepo_model_builder.builders import OutputBuilder
 from oarepo_model_builder.datatypes import DataType
 from oarepo_model_builder_ui.config import UI_ITEMS
 
+from oarepo_model_builder.utils.python_name import module_to_path
 
 class InvenioI18nBuilder(OutputBuilder):
     TYPE = "invenio_i18n"
@@ -13,9 +14,8 @@ class InvenioI18nBuilder(OutputBuilder):
     def build_node(self, datatype: DataType):
         translation_config = datatype.section_translations.config
 
-        mod = translation_config['module'].split(".")
-        path = Path(*mod)
-        self.output = self.builder.get_output("po", path / "translations")
+        path = module_to_path(translation_config['module'])
+        self.output = self.builder.get_output("po", path)
 
         for node in datatype.deep_iter():
             if node != datatype:
