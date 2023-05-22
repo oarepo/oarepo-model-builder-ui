@@ -12,9 +12,10 @@ class InvenioLayoutSetupCfgBuilder(OutputBuilder):
         super().finish()
 
         output: CFGOutput = self.builder.get_output("cfg", "setup.cfg")
+        config = self.current_model.section_ui.config
 
         output.add_entry_point(
             "oarepo.ui",
-            self.current_model.package,
-            f"{self.current_model.package}.models:{Path(self.current_model.ui_layout).name}",
+            config['alias'],
+            f"{config['module']}:{Path(config['file']).name}",
         )

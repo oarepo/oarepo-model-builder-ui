@@ -12,8 +12,10 @@ class InvenioI18NSetupCfgBuilder(OutputBuilder):
 
         output: CFGOutput = self.builder.get_output("cfg", "setup.cfg")
 
+        config = self.current_model.section_translations.config
+
         output.add_entry_point(
             "invenio_i18n.translations",
-            self.current_model.translations_setup_cfg,
-            self.current_model.package,
+            config["alias"],
+            config["module"].rsplit(".", maxsplit=1)[0],
         )

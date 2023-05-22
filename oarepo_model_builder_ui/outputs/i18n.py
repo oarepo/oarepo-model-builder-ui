@@ -39,7 +39,7 @@ class POOutput(OutputBase):
     TYPE = "po"
 
     def begin(self):
-        languages = self.builder.schema.settings.i18n_languages
+        languages = self.builder.schema.settings['i18n-languages']
         self.languages = languages
         self.po_files = {}
 
