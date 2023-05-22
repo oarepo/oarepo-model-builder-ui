@@ -10,7 +10,7 @@ def create_ui_property_schema():
     fields = {}
     for fld in UI_ITEMS:
         for lang in ["key", *CLDR_LANGUAGES]:
-            fields[f"{fld}.{lang}"] = ma_fields.String(required=False)
+            fields[f"{fld}.{lang}"] = ma_fields.String(required=False, data_key=f"{fld}.{lang}", attribute=f"{fld}.{lang}")
     fields["i18n.key"] = ma_fields.String(required=False)
     return type("UIPropertyValidator", (ma.Schema,), fields)
 

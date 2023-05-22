@@ -24,10 +24,9 @@ class InvenioI18nBuilder(OutputBuilder):
     def process_node(self, node):
         ui_items = defaultdict(dict)
 
-        for el, val in node.definition.items():
-            for ui in UI_ITEMS:
-                if el.startswith(f"{ui}."):
-                    ui_items[ui][el[len(ui) + 1:]] = val
+        for ui in UI_ITEMS:
+            if ui in node.definition:
+                ui_items[ui] = {**node.definition[ui]}
 
         key_proto = node.definition.get("i18n.key")
         for ui in UI_ITEMS:
