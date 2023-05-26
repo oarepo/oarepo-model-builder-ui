@@ -35,24 +35,11 @@ class InvenioLayoutBuilder(JSONBaseBuilder):
         generated = self.generate_node(node)
         self.output.merge(generated)
 
-    def generate(self, node):
-        ui: Section = node.section_ui
-        ret = {**ui.config}
-        ret.pop('marshmallow', None)
-
-        if ui.children:
-            properties = ret.setdefault("children", {})
-            for k, v in ui.children.items():
-                v = self.generate(v)
-                properties[k] = v
-        if ui.item:
-            ret["child"] = self.generate(ui.item)
-        return ret
-
     def generate_node(self, node):
         ui = {}
         section = node.section_ui
         data = node.definition
+        facets = node.section_facets.config['facets']
 
         ui.update({k.replace("-", "_"): v for k, v in section.config.items()})
         ui.pop('marshmallow', None)
@@ -71,12 +58,8 @@ class InvenioLayoutBuilder(JSONBaseBuilder):
                 node.path.replace('.', '/') + f".{fld}",
             )
 
-        # facets = get_facet_details(
-        #     self.stack, self.current_model, self.schema, set()
-        # )
-        #
-        # if len(facets):
-        #     ui["facet"] = facets[0]["path"]
+        if facets:
+            ui["facet"] = facets[0].path
 
         if node.children:
             children = ui.setdefault('children', {})
