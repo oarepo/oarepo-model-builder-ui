@@ -16,6 +16,9 @@ class TranslationsSchema(ma.Schema):
     alias = ma.fields.Str()
 
 class UISchema(ma.Schema):
+    """
+    registered in entry points to the ui.model group
+    """
     class Meta:
         unknown = ma.RAISE
 
@@ -29,7 +32,6 @@ class UIModelComponent(DataTypeComponent):
 
     class ModelSchema(ma.Schema):
         translations = ma.fields.Nested(TranslationsSchema)
-        ui = ma.fields.Nested(UISchema)
 
     def before_model_prepare(self, datatype, *, context, **kwargs):
         translations = set_default(datatype, 'translations', {})
