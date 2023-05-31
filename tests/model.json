@@ -40,7 +40,13 @@
       },
       "en": {
         "type": "keyword",
-        "enum": ["a", "b", "c"]
+        "enum": ["a", "b", "c"],
+        "enum.a.cs": "A cs",
+        "enum.b.cs": "B cs",
+        "enum.c.cs": "C cs",
+        "enum.a.en": "A en",
+        "enum.b.en": "B en",
+        "enum.c.en": "C en"
       }
     }
   }

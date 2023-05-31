@@ -24,9 +24,15 @@ class InvenioI18nBuilder(OutputBuilder):
     def process_node(self, node):
         ui_items = defaultdict(dict)
 
-        for ui in UI_ITEMS:
-            if ui in node.definition:
-                ui_items[ui] = {**node.definition[ui]}
+        for k in node.definition:
+            split_key = k.split('.')
+            if len(split_key) < 2:
+                continue
+            ui_type = split_key[0]
+            lang = split_key[-1]
+            prefix = '.'.join(split_key[:-1])
+            if ui_type in UI_ITEMS or ui_type == 'enum':
+                ui_items[prefix][lang] = node.definition[k]
 
         key_proto = node.definition.get("i18n.key")
         for ui in UI_ITEMS:
@@ -42,9 +48,9 @@ class InvenioI18nBuilder(OutputBuilder):
         enum_keys = node.definition.get("enum", [])
         for en in enum_keys:
             if key_proto:
-                ui_items[en]["key"] = f"{key_proto}.enum.{en}"
+                ui_items[f"enum.{en}"]["key"] = f"{key_proto}.enum.{en}"
             else:
-                ui_items[en]["key"] = (
+                ui_items[f"enum.{en}"]["key"] = (
                         node.path.replace('.', '/') + f".enum.{en}"
                 )
 
