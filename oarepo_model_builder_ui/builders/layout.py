@@ -57,6 +57,10 @@ class InvenioLayoutBuilder(JSONBaseBuilder):
                 f"{fld}.key",
                 node.path.replace('.', '/') + f".{fld}",
             )
+        if 'enum' in data:
+            ui['enum'] = data.get(f"enum.key",
+                node.path.replace('.', '/') + ".enum",
+            )
 
         if facets:
             ui["facet"] = facets[0].path
