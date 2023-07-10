@@ -15,6 +15,7 @@ class TranslationsSchema(ma.Schema):
     module = ma.fields.Str()
     alias = ma.fields.Str()
 
+
 class UISchema(ma.Schema):
     """
     registered in entry points to the ui.model group
@@ -25,6 +26,7 @@ class UISchema(ma.Schema):
     module = ma.fields.Str()
     file = ma.fields.Str()
     alias = ma.fields.Str()
+
 
 class UIModelComponent(DataTypeComponent):
     eligible_datatypes = [ModelDataType]
