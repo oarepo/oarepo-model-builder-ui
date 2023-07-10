@@ -1,14 +1,14 @@
 from typing import Dict
 
 from oarepo_model_builder.datatypes import DataTypeComponent
-from langcodes.language_lists import CLDR_LANGUAGES
 from oarepo_model_builder_ui.config import UI_ITEMS
 
-from marshmallow import fields as ma_fields
 import marshmallow as ma
 
 
 class UIPropertySchema(ma.Schema):
+    # just a model description, not displayed anywhere
+    description = ma.fields.String()
 
     def load(
         self,
@@ -22,16 +22,23 @@ class UIPropertySchema(ma.Schema):
         if many:
             x: Dict
             ui_items = [self.remove_ui_items(x) for x in data]
+            i18n_key = [x.pop('i18n.key', None) for x in data]
         else:
             ui_items = self.remove_ui_items(data)
+            i18n_key = data.pop('i18n.key', None)
+
         # perform normal validation
         ret = super().load(data, many=many, partial=partial, unknown=unknown)
         # add UI_ITEMS to data
         if many:
-            for ui, d in zip(ui_items, ret):
-                self.add_ui_items(d, ui)
+            for ui_item, ret_item, i18n_key_item in zip(ui_items, ret, i18n_key):
+                self.add_ui_items(ret_item, ui_item)
+                if i18n_key_item:
+                    ret_item['i18n.key'] = i18n_key_item
         else:
             self.add_ui_items(ret, ui_items)
+            if i18n_key:
+                ret['i18n.key'] = i18n_key
         return ret
 
     def remove_ui_items(self, data):
@@ -48,22 +55,6 @@ class UIPropertySchema(ma.Schema):
 
     def add_ui_items(self, data, ui_items):
         data.update(ui_items)
-
-#
-# def create_ui_property_schema():
-#     return UIPropertyValidator
-#
-#     # TODO: inefficient as it adds cca 300 fields on schema but ok for now
-#     fields = {}
-#     for fld in UI_ITEMS:
-#         for lang in ["key", *CLDR_LANGUAGES]:
-#             fields[f"{fld}.{lang}"] = ma_fields.String(required=False, data_key=f"{fld}.{lang}", attribute=f"{fld}.{lang}")
-#     fields["i18n.key"] = ma_fields.String(required=False)
-#     return type("UIPropertyValidator", (ma.Schema,), fields)
-#
-#
-# UIPropertySchema = create_ui_property_schema()
-
 
 
 class DataTypeUIComponent(DataTypeComponent):
