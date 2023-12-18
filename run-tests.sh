@@ -3,7 +3,6 @@
 set -e
 
 OAREPO_VERSION=${OAREPO_VERSION:-11}
-OAREPO_VERSION_MAX=$((OAREPO_VERSION+1))
 
 BUILDER_VENV=".venv-builder"
 if test -d $BUILDER_VENV ; then
@@ -36,8 +35,7 @@ fi
 python3 -m venv $VENV_TESTS
 . $VENV_TESTS/bin/activate
 pip install -U setuptools pip wheel
-pip install "oarepo>=$OAREPO_VERSION,<$OAREPO_VERSION_MAX"
-pip install pytest-invenio
+pip install "oarepo[tests]==${OAREPO_VERSION}.*"
 
 pip install -e 'mock-record'
 
