@@ -91,7 +91,7 @@ class POOutput(OutputBase):
         if language is None:
             for pf in self.po_files.values():
                 pf.add(key, value)
-        else:
+        elif language in self.po_files:
             self.po_files[language].add(key, value)
 
     @property
