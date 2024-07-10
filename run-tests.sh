@@ -2,14 +2,15 @@
 
 set -e
 
-OAREPO_VERSION=${OAREPO_VERSION:-11}
+OAREPO_VERSION=${OAREPO_VERSION:-12}
+PYTHON="${PYTHON:-python3.10}"
 
 BUILDER_VENV=".venv-builder"
 if test -d $BUILDER_VENV ; then
 	rm -rf $BUILDER_VENV
 fi
 
-python3 -m venv $BUILDER_VENV
+${PYTHON} -m venv $BUILDER_VENV
 . $BUILDER_VENV/bin/activate
 pip install -U setuptools pip wheel
 pip install -e .
@@ -32,7 +33,7 @@ if test -d $VENV_TESTS ; then
 	rm -rf $VENV_TESTS
 fi
 
-python3 -m venv $VENV_TESTS
+${PYTHON} -m venv $VENV_TESTS
 . $VENV_TESTS/bin/activate
 pip install -U setuptools pip wheel
 pip install "oarepo[tests]==${OAREPO_VERSION}.*"
