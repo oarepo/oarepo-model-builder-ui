@@ -52,6 +52,9 @@ class InvenioLayoutBuilder(JSONBaseBuilder):
             ui.setdefault("detail", t)
             ui.setdefault("input", t)
 
+        if data.get("required"):
+            ui["required"] = True
+
         for fld in UI_ITEMS:
             ui[fld] = data.get(
                 f"{fld}.key",

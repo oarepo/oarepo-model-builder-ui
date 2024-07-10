@@ -10,7 +10,8 @@
       "title": {
         "type": "fulltext",
         "label.en": "Title",
-        "label.cs": "Název"
+        "label.cs": "Název",
+        "required": true
       },
       "prices[]": {
         "type": "double"
