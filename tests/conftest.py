@@ -12,6 +12,10 @@ def extra_entry_points():
 def app_config(app_config):
     app_config["I18N_LANGUAGES"] = [("en", "English"), ("cs", "Czech")]
     app_config["BABEL_DEFAULT_LOCALE"] = "en"
+    app_config["SQLALCHEMY_ENGINE_OPTIONS"] = { # hack to avoid pool_timeout set in invenio_app_rdm
+        "pool_pre_ping": False,
+        "pool_recycle": 3600
+    }
     return app_config
 
 

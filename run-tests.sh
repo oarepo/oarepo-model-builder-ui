@@ -3,7 +3,10 @@
 set -e
 
 OAREPO_VERSION=${OAREPO_VERSION:-12}
-PYTHON="${PYTHON:-python3.10}"
+PYTHON="${PYTHON:-python3.12}"
+
+export PIP_EXTRA_INDEX_URL=https://gitlab.cesnet.cz/api/v4/projects/1408/packages/pypi/simple
+export UV_EXTRA_INDEX_URL=https://gitlab.cesnet.cz/api/v4/projects/1408/packages/pypi/simple
 
 BUILDER_VENV=".venv-builder"
 if test -d $BUILDER_VENV ; then
@@ -36,7 +39,7 @@ fi
 ${PYTHON} -m venv $VENV_TESTS
 . $VENV_TESTS/bin/activate
 pip install -U setuptools pip wheel
-pip install "oarepo[tests]==${OAREPO_VERSION}.*"
+pip install "oarepo[rdm,tests]==${OAREPO_VERSION}.*"
 
 pip install -e 'mock-record'
 
